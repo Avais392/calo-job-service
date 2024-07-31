@@ -80,5 +80,22 @@ wss.on("connection", (ws) => {
 
 // Start the server
 server.listen(PORT, () => {
+  // Load existing jobs and add pending ones to the queue
+  const jobs = loadJobs();
+  jobs.forEach((job) => {
+    if (job.status === "pending") {
+      notifyAllClients(job);
+
+      const jobPromise = new Promise((resolve) => {
+        jobQueue.push({ jobId: job.jobId, resolve });
+      });
+    }
+  });
+
+  // Start processing if not already processing
+  if (!isProcessing) {
+    isProcessing = true; // Set processing flag
+    processNextJob(jobQueue, notifyAllClients, getRandomPhoto, saveJobs);
+  }
   console.log(`Server is running on http://localhost:${PORT}`);
 });
