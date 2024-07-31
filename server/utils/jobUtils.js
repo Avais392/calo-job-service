@@ -25,6 +25,7 @@ const processNextJob = async (
   }
 
   const { jobId, resolve } = jobQueue.shift();
+
   const jobs = loadJobs();
 
   await randomDelay();

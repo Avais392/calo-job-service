@@ -17,8 +17,7 @@ const getRandomPhoto = async () => {
   }
 };
 
-// Function to introduce a random delay
-const randomDelay = () => {
+const getJobTime = () => {
   const minSeconds = 5;
   const maxSeconds = 5 * 60;
   const minMilliseconds = minSeconds * 1000;
@@ -27,6 +26,12 @@ const randomDelay = () => {
   const delay =
     Math.floor(Math.random() * (maxMilliseconds - minMilliseconds + 1)) +
     minMilliseconds; // Random delay between 5s to 5min
+  return delay;
+};
+// Function to introduce a random delay
+const randomDelay = (jobTime = null) => {
+  const delay = jobTime ?? getJobTime();
+  console.log("job time", delay);
   return new Promise((resolve) => setTimeout(resolve, delay));
 };
 
