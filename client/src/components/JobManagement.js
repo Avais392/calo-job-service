@@ -51,6 +51,7 @@ const JobManagement = () => {
 
     websocket.onmessage = (event) => {
       const data = JSON.parse(event.data);
+      console.log("Job update received:", data);
       if (data.status === "resolved") {
         setJobs((prevJobs) =>
           prevJobs.map((job) =>
