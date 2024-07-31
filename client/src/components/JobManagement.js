@@ -16,7 +16,6 @@ import {
 const JobManagement = () => {
   const [jobs, setJobs] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [ws, setWs] = useState(null); // WebSocket state
 
   const loadJobs = async () => {
     setLoading(true);
@@ -71,8 +70,6 @@ const JobManagement = () => {
         ]);
       }
     };
-
-    setWs(websocket);
 
     return () => {
       websocket.close(); // Cleanup on unmount
