@@ -1,3 +1,6 @@
+# Job Processing API
+
+![Job Processing API](https://via.placeholder.com/800x200.png?text=Job+Processing+API)
 
 ## Table of Contents
 1. [File Structure](#file-structure)
@@ -8,6 +11,19 @@
 6. [Utility Functions](#utility-functions)
 7. [Features and Approaches](#features-and-approaches)
 8. [Technologies Used](#technologies-used)
+
+---
+
+## File Structure
+```plaintext
+/job-processing-api
+├── server.js            # Main server file to handle API requests and WebSocket connections
+├── utils
+│   ├── jobUtils.js      # Utility functions for job management (loading, saving, processing)
+│   └── photoUtils.js    # Utility functions for fetching random photos
+├── jobs.json            # JSON file to store job data
+├── package.json          # Project metadata and dependencies
+└── README.md             # Project documentation
 
 ## File Structure
 /job-processing-api
