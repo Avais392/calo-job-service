@@ -4,11 +4,12 @@
 3. [File Structure](#file-structure)
 4. [Technologies Used](#technologies-used)
 5. [Setup Instructions](#setup-instructions)
-6. [Code Sections](#code-sections)
+6. [Main Features](#main-features)
+7. [Code Sections](#code-sections)
    - [server.js](#serverjs)
    - [jobUtils.js](#jobutilsjs)
    - [photoUtils.js](#photoutilsjs)
-7. [Time Report](#time-report)
+8. [Time Report](#time-report)
 
 
 ---
@@ -133,6 +134,19 @@ All API endpoints are accessible at: `http://localhost:3000`
     ```
 
 The server will start on `http://localhost:3000`
+
+
+## Main Features
+
+### WebSocket Implementation
+- Introduced WebSocket to communicate live updates or job statuses to clients.
+
+### Job Queue System
+- Maintains a queue for all pending and new incoming jobs, executing them sequentially.
+- Each job completion triggers the execution of the next job.
+
+### Server Crash Recovery
+- In the event of a server crash, all pending jobs are retrieved and reinserted into the job queue, ensuring continuous sequential execution.
 
 
 ## Code Sections
