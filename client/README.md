@@ -1,70 +1,228 @@
-# Getting Started with Create React App
+## Getting Started
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+### Prerequisites
+Ensure you have the following installed:
+- [Node.js](https://nodejs.org/) (v14 or higher)
+- [npm](https://www.npmjs.com/) (comes with Node.js)
 
-## Available Scripts
+### Setup Instructions
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/avais392/cola-job-service.git
+   ```
+2. Navigate to the project directory:
+```bash
+cd client
+```
+3.Install dependencies:
+```bash
+npm install
+```
+## Running the Application
+To start the development server, run:
 
-In the project directory, you can run:
-
-### `npm start`
+```bash
+npm start
+```
 
 Runs the app in the development mode.\
 Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
 
-### `npm test`
+## Table of Contents
+1. [Overview](#overview)
+2. [File Structure](#file-structure)
+3. [Setup Instructions](#setup-instructions)
+4. [WebSocket Connection Handling](#websocket-connection-handling)
+5. [Utility Functions](#utility-functions)
+6. [Code Sections](#code-sections)
+   - [App.js](#appjs)
+   - [JobManagement.js](#jobmanagementjs)
+   - [JobList.js](#joblistjs)
+   - [JobItem.js](#jobitemjs)
+   - [api.js](#apijs)
+7. [Technologies Used](#technologies-used)
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+---
 
-### `npm run build`
+## Overview
+The Job Management Client is a React application that allows users to interact with the Job Processing API. It provides a user-friendly interface for viewing, creating, and updating job postings.
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+---
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+## File Structure
+```plaintext
+/src
+├── App.js                  # Main application file that renders the JobManagement component
+├── api.js                  # API functions for fetching and creating jobs
+├── components
+│   ├── JobItem.js          # Component that displays individual job details
+│   ├── JobList.js          # Component that lists all jobs
+│   └── JobManagement.js     # Component for managing job operations
+├── assets
+│   └── placeholder.png      # Placeholder image for jobs without images
+├── package.json             # Project metadata and dependencies
+└── README.md                # Project documentation
+```
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+## Technologies Used
+- **[React]** - JavaScript library for building user interfaces.
+- **[Material-UI]** - React components for faster and easier web development.
+- **[Axios]** - Promise-based HTTP client for making API requests.
+- **[WebSocket]** - For real-time communication with the server.
+## WebSocket Connection Handling
+- When the client connects to the WebSocket server, a message is logged.
+- When the client disconnects, a message is logged.
+- All connected WebSocket clients are notified whenever a job is created or updated.
+## Utility Functions
+### API Functions
+- **fetchJobs()**: Fetches the list of jobs from the server.
+- **createJob(jobData)**: Sends a request to create a new job.
+## Code Sections
+1. ### **`App.js`**
+- **Purpose**: The main entry point of the client application that renders the JobManagement component.
+**Code Breakdown:**
+```javascript
 
-### `npm run eject`
+import React from "react";
+import JobManagement from "./components/JobManagement";
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+const App = () => {
+  return (
+    <div className="App">
+      <JobManagement />
+    </div>
+  );
+};
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+export default App;
+```
+2. ### **`JobManagement.js`**
+- **Purpose**: Manages job-related operations, including fetching jobs and handling job creation.
+**Code Breakdown:**
+```javascript
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+import React, { useState, useEffect } from "react";
+import { fetchJobs, createJob } from "../api";
+import JobList from "./JobList";
+import { useDebouncedCallback } from "use-debounce";
+import {
+  Container,
+  Typography,
+  Button,
+  CircularProgress,
+  Box,
+  Paper,
+  Fade,
+} from "@mui/material";
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+const JobManagement = () => {
+  const [jobs, setJobs] = useState([]);
+  const [loading, setLoading] = useState(true);
 
-## Learn More
+  const loadJobs = async () => { /* ... */ };
+  const handleCreateJob = async () => { /* ... */ };
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+  const debounced = useDebouncedCallback(async () => {
+    await handleCreateJob();
+  }, 1000);
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+  useEffect(() => {
+    loadJobs();
+    // WebSocket connection handling here
+  }, []);
 
-### Code Splitting
+  return (
+    <Container maxWidth="md">
+      {/* UI elements for job management */}
+    </Container>
+  );
+};
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+export default JobManagement;
+```
+3. ### **`JobList.js`**
+- **Purpose**: Displays a list of jobs.
+**Code Breakdown:**
+```javascript
 
-### Analyzing the Bundle Size
+import React from "react";
+import JobItem from "./JobItem";
+import { Container } from "@mui/material";
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+const JobList = ({ jobs }) => {
+  return (
+    <Container>
+      <ul style={{ listStyleType: "none", padding: 0 }}>
+        {jobs.length > 0 ? (
+          jobs.map((job) => <JobItem key={job.jobId} job={job} />)
+        ) : (
+          <li>No jobs available</li>
+        )}
+      </ul>
+    </Container>
+  );
+};
 
-### Making a Progressive Web App
+export default JobList;
+```
+4. ### **`JobItem.js`**
+- **Purpose**: Renders individual job details, including status and associated image.
+**Code Breakdown:**
+```javascript
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+import React from "react";
+import {
+  Card,
+  CardContent,
+  Typography,
+  CardMedia,
+  Chip,
+  Box,
+  styled,
+} from "@mui/material";
 
-### Advanced Configuration
+const JobItem = ({ job }) => {
+  return (
+    <Card>
+      <CardMedia /* ... */ />
+      <CardContent>
+        <Typography>Job ID: {job.jobId}</Typography>
+        {/* Status display */}
+      </CardContent>
+    </Card>
+  );
+};
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+export default JobItem;
+```
+5. ### **`api.js`**
+- **Purpose:** Contains functions for API requests related to job management.
+**Code Breakdown:**
+```javascript
+import axios from "axios";
 
-### Deployment
+const API_URL = "http://localhost:3000/jobs";
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+const fetchJobs = async () => {
+  const response = await axios.get(API_URL);
+  return response.data;
+};
 
-### `npm run build` fails to minify
+const createJob = async (jobData) => {
+  await axios.post(API_URL, jobData);
+};
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+export { fetchJobs, createJob };
+```
+## Time Report
+
+|Section|	Time Spent|
+| ------------- | ------------- |
+|Project Setup|	1 hour|
+|API Integration|	1 hour|
+|WebSocket Implementation|	1 hour|
+|Component Development|	4 hours|
+|Testing & Debugging|	3 hours|
+|Documentation|	3 hours|
+|Total|	13 hours|
