@@ -52,20 +52,20 @@ All API endpoints are accessible at: `http://localhost:3000`
   - **200 OK**
   - **Body:**
     ```json
-    [
-  {
-    "jobId": "unique-job-id",
-    "status": "pending/resolved",
-    "image": "url-to-image"
-  }
-]
+        [
+        {
+            "jobId": "unique-job-id",
+            "status": "pending/resolved",
+            "image": "url-to-image"
+        }
+        ]
     ```
 - **Example Request:**
   ```bash
   curl -X GET http://localhost:3000/jobs
   ```
 
-  ### 3. Get Job by ID
+### 3. Get Job by ID
 - **Endpoint:** `GET /jobs/:id`
 - **Description:** Retrieves the details of a specific job by its ID.
 - **Path Parameter:** 
@@ -74,24 +74,24 @@ All API endpoints are accessible at: `http://localhost:3000`
   - **200 OK**
   - **Body:**
     ```json
-   {
-  "jobId": "unique-job-id",
-  "status": "pending/resolved",
-  "image": "url-to-image"
-}
+    {
+    "jobId": "unique-job-id",
+    "status": "pending/resolved",
+    "image": "url-to-image"
+    }
     ```
     - **404 Not Found**: If job does not exist.
     - **Body:**
     ```json
-   {
-  "message": "Job not found"
-}
+    {
+    "message": "Job not found"
+    }
 
     ```
 - **Example Request:**
-  ```bash
- curl -X GET http://localhost:3000/jobs/<unique-job-id>
- ```
+    ```bash
+    curl -X GET http://localhost:3000/jobs/<unique-job-id>
+    ```
 
 ## File Structure
 ```plaintext
