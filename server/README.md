@@ -1,22 +1,116 @@
 ## Table of Contents
 1. [Overview](#overview)
-2. [File Structure](#file-structure)
-3. [Setup Instructions](#setup-instructions)
-4. [Time Report](#time-report)
-5. [WebSocket Connection Handling](#websocket-connection-handling)
-6. [Utility Functions](#utility-functions)
-7. [Code Sections](#code-sections)
+2. [API Documentation](#api-documentation)
+3. [File Structure](#file-structure)
+4. [Technologies Used](#technologies-used)
+5. [Setup Instructions](#setup-instructions)
+6. [Code Sections](#code-sections)
    - [server.js](#serverjs)
    - [jobUtils.js](#jobutilsjs)
    - [photoUtils.js](#photoutilsjs)
-8. [Technologies Used](#technologies-used)
+7. [Time Report](#time-report)
+
 
 ---
 
 ## Overview
-The Job Processing API allows users to submit jobs, which are processed in a queue. The API integrates with Unsplash to fetch random images as part of the job processing.
+The Job Processing APIs allows users to submit jobs, which are processed in a queue. The API integrates with Unsplash to fetch random images as part of the job processing.
 
 ---
+
+## API Documentation
+
+### Base URL
+All API endpoints are accessible at: `http://localhost:3000`
+
+### 1. Create a Job
+- **Endpoint:** `POST /jobs`
+- **Description:** Creates a new job to fetch a random photo.
+- **Request Headers:**
+  - `Content-Type: application/json`
+- **Request Body:** None
+- **Response:**
+  - **201 Created**
+  - **Body:**
+    ```json
+    {
+      "jobId": "unique-job-id"
+    }
+    ```
+- **Example Request:**
+  ```bash
+  curl -X POST http://localhost:3000/jobs -H "Content-Type: application/json"
+  ```
+
+### 2. Create a Job
+- **Endpoint:** `GET /jobs`
+- **Description:** Retrieves a list of all jobs along with their statuses.
+- **Request Headers:**
+  - `Content-Type: application/json`
+- **Request Body:** None
+- **Response:**
+  - **200 OK**
+  - **Body:**
+    ```json
+    [
+  {
+    "jobId": "unique-job-id",
+    "status": "pending/resolved",
+    "image": "url-to-image"
+  }
+]
+    ```
+- **Example Request:**
+  ```bash
+  curl -X GET http://localhost:3000/jobs
+  ```
+
+  ### 3. Get Job by ID
+- **Endpoint:** `GET /jobs/:id`
+- **Description:** Retrieves the details of a specific job by its ID.
+- **Path Parameter:** 
+    - `**id:**` The unique ID of the job.
+- **Response:**
+  - **200 OK**
+  - **Body:**
+    ```json
+   {
+  "jobId": "unique-job-id",
+  "status": "pending/resolved",
+  "image": "url-to-image"
+}
+    ```
+    - **404 Not Found**: If job does not exist.
+    - **Body:**
+    ```json
+   {
+  "message": "Job not found"
+}
+
+    ```
+- **Example Request:**
+  ```bash
+ curl -X GET http://localhost:3000/jobs/<unique-job-id>
+ ```
+
+## File Structure
+```plaintext
+/server
+├── server.js            # Main server file to handle API requests and WebSocket connections
+├── utils
+│   ├── jobUtils.js      # Utility functions for job management (loading, saving, processing)
+│   └── photoUtils.js    # Utility functions for fetching random photos
+├── jobs.json            # JSON file to store job data
+├── package.json          # Project metadata and dependencies
+└── README.md             # Project documentation
+```
+
+## Technologies Used
+- [Node.js] - JavaScript runtime for building the server.
+- [Express] - Framework for building RESTful APIs.
+- [WebSocket] - For real-time communication between the server and clients.
+- [Axios] - Promise-based HTTP client for making API requests.
+- [UUID] - For generating unique job IDs.
 
 
 ## Setup Instructions
@@ -39,62 +133,6 @@ The Job Processing API allows users to submit jobs, which are processed in a que
     ```
 
 The server will start on `http://localhost:3000`
-
-## File Structure
-```plaintext
-/server
-├── server.js            # Main server file to handle API requests and WebSocket connections
-├── utils
-│   ├── jobUtils.js      # Utility functions for job management (loading, saving, processing)
-│   └── photoUtils.js    # Utility functions for fetching random photos
-├── jobs.json            # JSON file to store job data
-├── package.json          # Project metadata and dependencies
-└── README.md             # Project documentation
-```
-
-## Technologies Used
-- [Node.js] - JavaScript runtime for building the server.
-- [Express] - Framework for building RESTful APIs.
-- [WebSocket] - For real-time communication between the server and clients.
-- [Axios] - Promise-based HTTP client for making API requests.
-- [UUID] - For generating unique job IDs.
-
-## Time Consumed
-| Section  | TimeSpent |
-| ------------- | ------------- |
-| Project Setup  | 1 hour  |
-|API Development|	3 hours|
-|WebSocket Implementation	|1 hours|
-|Utility Functions|	2 hours|
-|Queue Implementation| 1 hour |
-| Resume Job Incase of Server Crash | 1 hour |
-|Testing & Debugging|	3 hours|
-|Documentation|	2 hour|
-|Total|	14 hours|
-
-WebSocket
-Connection Handling
-When a client connects, a message is logged.
-When a client disconnects, a message is logged.
-Notifications
-All connected WebSocket clients are notified whenever a job is created or updated.
-Utility Functions
-Job Management
-loadJobs()
-Loads jobs from the jobs.json file.
-
-saveJobs(jobs)
-Saves the given jobs array to the jobs.json file.
-
-processNextJob(jobQueue, notifyAllClients, getRandomPhoto, saveJobs)
-Processes the next job in the queue. It fetches a random photo and updates the job status.
-
-Photo Fetching
-getRandomPhoto()
-Fetches a random photo from Unsplash using Axios.
-
-randomDelay(jobTime)
-Introduces a random delay before processing the next job. The delay can be customized or defaults to a random time between 5 seconds and 5 minutes.
 
 
 ## Code Sections
@@ -240,3 +278,16 @@ const randomDelay = (jobTime = null) => {
 
 module.exports = { getRandomPhoto, randomDelay }; // Export functions
 ```
+
+## Time Report
+| Section  | TimeSpent |
+| ------------- | ------------- |
+| Project Setup  | 1 hour  |
+|API Development|	3 hours|
+|WebSocket Implementation	|1 hours|
+|Utility Functions|	2 hours|
+|Queue Implementation| 1 hour |
+| Resume Job Incase of Server Crash | 1 hour |
+|Testing & Debugging|	3 hours|
+|Documentation|	2 hour|
+|Total|	14 hours|
