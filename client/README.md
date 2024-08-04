@@ -34,7 +34,6 @@ Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
 2. [File Structure](#file-structure)
 3. [Main Features](#main-features)
 7. [Technologies Used](#technologies-used)
-4. [WebSocket Connection Handling](#websocket-connection-handling)
 5. [Utility Functions](#utility-functions)
 6. [Code Sections](#code-sections)
    - [App.js](#appjs)
@@ -42,7 +41,7 @@ Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
    - [JobList.js](#joblistjs)
    - [JobItem.js](#jobitemjs)
    - [api.js](#apijs)
-7. [Technologies Used](#technologies-used)
+7. [Time-Reeport](#time-report)
 
 ---
 
@@ -73,16 +72,17 @@ The Job Management Client is a React application that allows users to interact w
 ### Interceptors for Excess Calls
 - Utilized interceptors to monitor connection errors. If there's no internet connection or network issue, an alert is triggered to notify the user.
 
+### WebSocket Connection Handling
+- When the client connects to the WebSocket server, a message is logged.
+- When the client disconnects, a message is logged.
+- All connected WebSocket clients are notified whenever a job is created or updated.
 
 ## Technologies Used
 - **[React]** - JavaScript library for building user interfaces.
 - **[Material-UI]** - React components for faster and easier web development.
 - **[Axios]** - Promise-based HTTP client for making API requests.
 - **[WebSocket]** - For real-time communication with the server.
-## WebSocket Connection Handling
-- When the client connects to the WebSocket server, a message is logged.
-- When the client disconnects, a message is logged.
-- All connected WebSocket clients are notified whenever a job is created or updated.
+
 ## Utility Functions
 ### API Functions
 - **fetchJobs()**: Fetches the list of jobs from the server.
