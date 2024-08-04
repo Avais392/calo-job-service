@@ -69,7 +69,7 @@ The Job Management Client is a React application that allows users to interact w
 ### Debounce on Create Job Button
 - Implemented debounce on the create job button to prevent multiple calls within one second from any client.
 
-### Interceptors for Excess Calls
+### Interceptors for API Calls
 - Utilized interceptors to monitor connection errors. If there's no internet connection or network issue, an alert is triggered to notify the user.
 
 ### WebSocket Connection Handling
