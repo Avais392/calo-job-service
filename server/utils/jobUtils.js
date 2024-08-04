@@ -1,7 +1,7 @@
 const fs = require("fs");
 const { randomDelay } = require("./photoUtils");
 
-const JOBS_FILE = "../jobs.json";
+const JOBS_FILE = "./jobs.json";
 
 const loadJobs = () => {
   if (fs.existsSync(JOBS_FILE)) {
