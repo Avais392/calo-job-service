@@ -5,7 +5,7 @@ This repository contains the Calo Job Service project, which includes both the c
 ## Project Structure
 
 ```plaintext
-callo-job-service/
+calo-job-service/
 ├── client/
 │ └── README.md
 ├── server/

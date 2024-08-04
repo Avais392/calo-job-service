@@ -32,7 +32,8 @@ Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
 ## Table of Contents
 1. [Overview](#overview)
 2. [File Structure](#file-structure)
-3. [Setup Instructions](#setup-instructions)
+3. [Main Features](#main-features)
+7. [Technologies Used](#technologies-used)
 4. [WebSocket Connection Handling](#websocket-connection-handling)
 5. [Utility Functions](#utility-functions)
 6. [Code Sections](#code-sections)
@@ -64,6 +65,14 @@ The Job Management Client is a React application that allows users to interact w
 ├── package.json             # Project metadata and dependencies
 └── README.md                # Project documentation
 ```
+## Front-End Features
+
+### Debounce on Create Job Button
+- Implemented debounce on the create job button to prevent multiple calls within one second from any client.
+
+### Interceptors for Excess Calls
+- Utilized interceptors to monitor connection errors. If there's no internet connection or network issue, an alert is triggered to notify the user.
+
 
 ## Technologies Used
 - **[React]** - JavaScript library for building user interfaces.
